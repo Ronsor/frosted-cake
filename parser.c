@@ -5115,6 +5115,16 @@ int fill_preprocessor_options(int argc, const char **argv,
       token_list_clear(&r);
       continue;
     }
+    if (argv[i][1] == 'i') {
+      char buffer[200];
+      snprintf(buffer, sizeof buffer, "#include \"%s\" \n", argv[i] + 2);
+      struct tokenizer_ctx tctx = {0};
+      struct token_list l1 = tokenizer(&tctx, buffer, "", 0, TK_FLAG_NONE);
+      struct token_list r = preprocessor(prectx, &l1, 0);
+      token_list_clear(&l1);
+      token_list_clear(&r);
+      continue;
+    }
   }
   return 0;
 }
@@ -5133,49 +5143,6 @@ void append_msvc_include_dir(struct preprocessor_ctx *prectx) {
    */
   char env[2000];
   int n = GetEnvironmentVariableA("INCLUDE", env, sizeof(env));
-
-  if (n == 0) {
-    /*
-     * Used in debug inside VC IDE
-     * type on msvc command prompt:
-     * echo %INCLUDE%
-     * to generate this string
-     */
-#if 1 /*DEBUG INSIDE MSVC IDE*/
-
-#define STR_C                                                                  \
-  "C:\\Program Files\\Microsoft Visual "                                       \
-  "Studio\\2022\\Preview\\VC\\Tools\\MSVC\\14.37.32820\\include;C:\\Program "  \
-  "Files\\Microsoft Visual "                                                   \
-  "Studio\\2022\\Preview\\VC\\Auxiliary\\VS\\include;C:\\Program Files "       \
-  "(x86)\\Windows Kits\\10\\include\\10.0.22000.0\\ucrt;C:\\Program Files "    \
-  "(x86)\\Windows Kits\\10\\\\include\\10.0.22000.0\\\\um;C:\\Program Files "  \
-  "(x86)\\Windows Kits\\10\\\\include\\10.0.22000.0\\\\shared;C:\\Program "    \
-  "Files (x86)\\Windows "                                                      \
-  "Kits\\10\\\\include\\10.0.22000.0\\\\winrt;C:\\Program Files "              \
-  "(x86)\\Windows Kits\\10\\\\include\\10.0.22000.0\\\\cppwinrt\n"
-
-#define STR                                                                    \
-  "C:\\Program Files\\Microsoft Visual "                                       \
-  "Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.36.32532\\include;C:"       \
-  "\\Program Files\\Microsoft Visual "                                         \
-  "Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.36.32532\\ATLMFC\\include;" \
-  "C:\\Program Files\\Microsoft Visual "                                       \
-  "Studio\\2022\\Professional\\VC\\Auxiliary\\VS\\include;C:\\Program Files "  \
-  "(x86)\\Windows Kits\\10\\include\\10.0.22000.0\\ucrt;C:\\Program Files "    \
-  "(x86)\\Windows Kits\\10\\\\include\\10.0.22000.0\\\\um;C:\\Program Files "  \
-  "(x86)\\Windows Kits\\10\\\\include\\10.0.22000.0\\\\shared;C:\\Program "    \
-  "Files (x86)\\Windows "                                                      \
-  "Kits\\10\\\\include\\10.0.22000.0\\\\winrt;C:\\Program Files "              \
-  "(x86)\\Windows Kits\\10\\\\include\\10.0.22000.0\\\\cppwinrt;C:\\Program "  \
-  "Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\include\\um"
-
-
-    snprintf(env, sizeof env, "%s", STR);
-
-    n = (int)strlen(env);
-#endif
-  }
 
   if (n > 0 && n < sizeof(env)) {
     const char *p = env;

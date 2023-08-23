@@ -37,6 +37,9 @@ get_src() {
 	done
 }
 
+echo "/* SPDX-License-Identifier: GPL-3 */"
+echo "/* Licensed under the GNU General Public License 3.0 */"
+echo "/* Generated at TimeStamp $(date +%s) */"
 get_sys_include
 get_include
 get_src

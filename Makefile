@@ -32,7 +32,7 @@ cake: $(OBJ)
 clean:
 	rm -f cake $(OBJ)
 
-cake_single.c: $(SRC)
+cake_single.c: $(SRC) amalgamate.sh
 	./amalgamate.sh > $@
 
 cake_single: cake_single.o

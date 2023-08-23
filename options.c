@@ -72,7 +72,7 @@ int fill_options(struct options *options, int argc, const char **argv) {
     if (argv[i][0] != '-')
       continue;
 
-    if (argv[i][1] == 'I' || argv[i][1] == 'D') {
+    if (argv[i][1] == 'I' || argv[i][1] == 'D' || argv[i][1] == 'i') {
       /*
         Valid, but handled with preprocessor
       */
@@ -236,6 +236,8 @@ void print_help() {
       "\n" WHITE "OPTIONS\n" RESET
       "\n" WHITE "  -Idir                 " RESET
       "Add directory to include search path\n"
+      "\n" WHITE "  -ifile                " RESET
+      "Automatically include file before preprocessing\n"
       "\n" WHITE "  -no-output            " RESET
       "Do not generate output\n"
       "\n" WHITE "  -Dsymbol              " RESET

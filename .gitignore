@@ -1,2 +1,4 @@
 cake
 *.o
+cake_single
+cake_single.c

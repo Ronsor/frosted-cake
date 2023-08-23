@@ -9,10 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
 struct constant_value make_constant_value_double(double d) {
   struct constant_value r;
   r.dvalue = d;

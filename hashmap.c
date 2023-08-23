@@ -4,9 +4,6 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef _WIN32
-#include <windows.h>
-#endif
 
 void hashmap_remove_all(struct hash_map *map) {
 

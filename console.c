@@ -1,6 +1,6 @@
 
 #ifdef _WIN32
-#include <Windows.h>
+#include <windows.h>
 #else
 #include <fcntl.h>
 #include <stdio.h>
@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#ifndef WIN32
+#ifndef _WIN32
 
 bool enable_vt_mode(void) { return true; }
 

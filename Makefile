@@ -31,3 +31,9 @@ cake: $(OBJ)
 
 clean:
 	rm -f cake $(OBJ)
+
+cake_single.c: $(SRC)
+	./amalgamate.sh > $@
+
+cake_single: cake_single.o
+	$(CC) $(LDFLAGS) -o $@ cake_single.o

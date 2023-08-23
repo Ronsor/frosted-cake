@@ -1674,57 +1674,6 @@ void type_set_attributes(struct type *p_type, struct declarator *pdeclarator) {
 struct type make_type_using_declarator(struct parser_ctx *ctx,
                                        struct declarator *pdeclarator);
 
-#if 0    
-/*this sample is useful to try in compiler explorer*/
-#include <cxxabi.h>
-#include <stdio.h>
-#include <typeinfo>
-
-int status;
-#define TYPE(EXPR)                                                             \
-  printf("%s=", #EXPR);                                                        \
-  printf("%s\n",                                                               \
-         abi::__cxa_demangle(typeid(typeof(EXPR)).name(), 0, 0, &status))
-
-
-typedef char* T1;
-typedef const T1 CONST_T1;
-typedef CONST_T1 T2[5];
-typedef T2 T3[2];
-
-int main()
-{
-    TYPE(T1);
-}
-#endif
-/*
-
-typedef char *T;
-T a[2]; //char * [2]
-
-typedef char *T[1];
-T a[2]; // char* [2][1]
-
-typedef char (*PF)(void);
-PF a[2]; //char (* [2])()
-
-typedef char *T;
-T (*a)(void); //char* (*)()
-
-typedef char const *T;
-T (*a)(void); //char const* (*)()
-
-typedef char (*PF)(void);
-    PF (*a)(void); //char (*(*)())()
-
-typedef char (*PF)(double);
-    PF (*a)(int); //char (*(*)(int))(double)
-
- typedef char (*PF)(double);
- const PF (*a)(int); //char (* const (*)(int))(double)
-
-*/
-
 struct type get_function_return_type(const struct type *p_type) {
 
   if (type_is_pointer(p_type)) {

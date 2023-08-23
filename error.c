@@ -6,7 +6,6 @@
 
 #ifdef _WIN32
 #include <winerror.h>
-// #include <winsock2.h>
 #endif
 
 const char *get_posix_error_message(int error) {
@@ -89,8 +88,6 @@ const char *get_posix_error_message(int error) {
     return "Directory not empty";
   case ELOOP:
     return "Too many symbolic links encountered";
-  // case  EWOULDBLOCK:
-  // case EAGAIN:  return "Operation would block";
   case ENOMSG:
     return "No message of desired type";
   case EIDRM:
@@ -195,10 +192,6 @@ const char *get_posix_error_message(int error) {
     return "Invalid request code";
   case EBADSLT:
     return "Invalid slot";
-
-    // case  EDEADLOCK:
-    // case EDEADLK:
-
   case EBFONT:
     return "Bad font file string_format";
   case ENONET:
@@ -431,13 +424,3 @@ int windows_error_to_posix(int i) {
   return EPERM;
 }
 #endif
-/*
-int GetWindowsOrLinuxSocketLastErrorAsPosix(void)
-{
-#ifdef _WIN32
-    return windows_error_to_posix(WSAGetLastError());
-#else
-    return errno;
-#endif
-}
-*/
